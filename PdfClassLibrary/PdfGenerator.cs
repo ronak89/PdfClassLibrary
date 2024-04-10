@@ -6,21 +6,28 @@ namespace PdfClassLibrary
 {
     public class PdfGenerator : IConverterPdf
     {
-        private readonly IConverter _converter;
+        //private readonly IConverter _converter;
 
-        public PdfGenerator(IConverter converter)
-        {
-            _converter = converter;
-        }
+        //public PdfGenerator(IConverter converter)
+        //{
+        //    _converter = converter;
+        //}
 
         public byte[] GeneratePdf(PdfSettings pdfSettings, string htmlContent)
         {
+            //string outputPath = @"D:\PDFCreator\Employee_Report11.pdf";
+            //string directory = Path.GetDirectoryName(outputPath);
+            //if (!Directory.Exists(directory))
+            //{
+            //    Directory.CreateDirectory(directory);
+            //}
             var globalSettings = new GlobalSettings
             {
                 Orientation = pdfSettings.OwnGlobalSettings.Orientation ?? Orientation.Portrait,
                 ColorMode = pdfSettings.OwnGlobalSettings.ColorMode ?? ColorMode.Color,
                 UseCompression = pdfSettings.OwnGlobalSettings.UseCompression ?? true,
                 DPI = pdfSettings.OwnGlobalSettings.DPI ?? 96,
+                Out = @"D:\PDFCreator\Employee_Report.pdf"
                 // Set other properties similarly...
             };
 
@@ -41,8 +48,13 @@ namespace PdfClassLibrary
                 GlobalSettings = globalSettings,
                 Objects = { objectSettings }
             };
+            var converter = new SynchronizedConverter(new PdfTools());
+            HtmlToPdfConverter htmlToPdfConverter = new HtmlToPdfConverter(converter);
 
-            return _converter.Convert(pdf);
+            byte[] bytes = htmlToPdfConverter.ConvertHtmlToPdf(globalSettings, objectSettings);
+            return bytes;
+
+            //return _converter.Convert(pdf);
         }
     }
     //using PdfClassLibrary;

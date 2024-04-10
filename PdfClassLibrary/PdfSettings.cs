@@ -1,10 +1,4 @@
-﻿using DinkToPdf.Contracts;
-using PdfClassLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PdfClassLibrary.Models;
 
 namespace PdfClassLibrary
 {
